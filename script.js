@@ -107,7 +107,7 @@ body.addEventListener('wheel', e => transform.transformHandler(e) );
 let ws;
 let color;
 let receivedColors = false;
-const onlineCount = document.querySelector('#online-count');
+const numberOfUsers = document.querySelector('#number-of-users');
 function connect() {
     ws = new WebSocket('wss://multiplayer-pixel-art-backend.onrender.com');
     ws.onopen = () => {
@@ -163,8 +163,8 @@ function connect() {
                 arr[2] = color.b;
                 arr[3] = color.a;
                 ctx.putImageData(imageData, data.x, data.y);
-            } else if (data.msgType === 'online') {
-                onlineCount.textContent = data.count;
+            } else if (data.msgType === 'user') {
+                numberOfUsers.textContent = data.number;
             };
         };
         canvas.addEventListener('dblclick', e => {
@@ -175,7 +175,7 @@ function connect() {
     };
     ws.onclose = () => {
         ws = null;
-        onlineCount.textContent = 0;
+        numberOfUsers.textContent = 0;
         setTimeout(connect, 5000);
     };
 };
