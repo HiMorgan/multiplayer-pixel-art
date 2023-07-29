@@ -1,3 +1,4 @@
+const main = document.querySelector('main');
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 const cursor = document.querySelector('#cursor');
@@ -21,7 +22,7 @@ const transform = {
             e.newY = e.clientY;
             this.touches.push(e);
         };
-        body.classList.add('grabbing');
+        main.classList.add('grabbing');
     },
     pointerupHandler(e) {
         if (e.pointerType === 'mouse') {
@@ -30,7 +31,7 @@ const transform = {
             const i = this.touches.findIndex(element => element.pointerId === e.pointerId);
             this.touches.splice(i, 1);
         };
-        body.classList.remove('grabbing');
+        main.classList.remove('grabbing');
     },
     set(x, y, z) {
         this.x = x;
@@ -98,11 +99,10 @@ const transform = {
     }
 };
 
-const body = document.body;
-body.addEventListener('pointerdown', e => transform.pointerdownHandler(e) );
-body.addEventListener('pointerup', e => transform.pointerupHandler(e) );
-body.addEventListener('pointermove', e => transform.transformHandler(e) );
-body.addEventListener('wheel', e => transform.transformHandler(e) );
+main.addEventListener('pointerdown', e => transform.pointerdownHandler(e) );
+main.addEventListener('pointerup', e => transform.pointerupHandler(e) );
+main.addEventListener('pointermove', e => transform.transformHandler(e) );
+main.addEventListener('wheel', e => transform.transformHandler(e) );
 
 let ws;
 let color;
@@ -154,6 +154,9 @@ function connect() {
                     z = window.innerHeight / canvas.width;
                 };
                 transform.set(x, y, z);
+                const loadingScreen = document.querySelector('#loading-screen');
+                loadingScreen.classList.add('transparent');
+                setTimeout(() => loadingScreen.classList.add('hidden'), 500);
             } else if (data.msgType === 'pixel') {
                 const imageData = ctx.createImageData(1, 1);
                 const arr = imageData.data;
