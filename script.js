@@ -156,7 +156,7 @@ function connect() {
                 transform.set(x, y, z);
                 const loadingScreen = document.querySelector('#loading-screen');
                 loadingScreen.classList.add('transparent');
-                setTimeout(() => loadingScreen.classList.add('hidden'), 500);
+                setTimeout(() => loadingScreen.classList.add('hidden'), 300);
             } else if (data.msgType === 'pixel') {
                 const imageData = ctx.createImageData(1, 1);
                 const arr = imageData.data;
